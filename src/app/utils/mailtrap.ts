@@ -26,7 +26,7 @@ const sendEmail = async (email: string, subject: string, html: string) => {
     } as nodemailer.TransportOptions);
 
     await transporter.sendMail({
-      from: `"Swapspace" ${process.env.SENDERS_EMAIL}`,
+      from: `"paynflex" ${process.env.SENDERS_EMAIL}`,
       to: email,
       subject: subject,
       html: html,

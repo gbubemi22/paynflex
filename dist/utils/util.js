@@ -90,3 +90,27 @@ export const sendSMS = async (phoneNumber, message) => {
     }
 };
 export { generateOTP, getOtpExpiryTime, validateFileType };
+// const request = require('request');
+// const options = {
+//   method: 'POST',
+//   url: 'https://api.sendchamp.com/api/v1/verification/create',
+//   headers: {
+//     Accept: 'application/json,text/plain,*/*',
+//     'Content-Type': 'application/json',
+//     Authorization: 'Bearer sendchamp_live_$2a$10$rZKsZeYMKCEtjB203tI.zeLgW1M1B2EZvM3NLdJ6mOebED0zYvy5y'
+//   },
+//   form: {
+//     channel: 'sms',
+//     sender: 'SAlert',
+//     token_type: 'numeric',
+//     token_length: 6,
+//     expiration_time: 10,
+//     customer_mobile_number: '2347061813815',
+//     meta_data: {description: 'demo'},
+//     in_app_token: false
+//   }
+// };
+// request(options, function (error, response, body) {
+//   if (error) throw new Error(error);
+//   console.log(body);
+// });

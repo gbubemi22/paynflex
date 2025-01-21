@@ -23,7 +23,7 @@ const sendEmail = async (email, subject, html) => {
             STARTTLS: SMTP_STARTTLS_REQUIRED,
         });
         await transporter.sendMail({
-            from: `"Swapspace" ${process.env.SENDERS_EMAIL}`,
+            from: `"paynflex" ${process.env.SENDERS_EMAIL}`,
             to: email,
             subject: subject,
             html: html,
