@@ -53,6 +53,16 @@ const UserSchema = new mongoose.Schema<UserDocument>(
       required: false,
     },
 
+    kycStatus: {
+      type: Boolean,
+      default: false,
+    },
+
+    block: {
+      type: Boolean,
+      default: false,
+    },
+
     lastLoginDevice: {
       userAgent: String,
       appVersion: String,

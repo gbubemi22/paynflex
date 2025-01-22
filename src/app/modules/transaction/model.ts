@@ -33,6 +33,10 @@ const TransactionSchema = new mongoose.Schema<TransactionDocument>(
       type: Date,
       default: Date.now(),
     },
+    status: {
+      type: String,
+      default: "PENDING",
+    },
   },
 
   {

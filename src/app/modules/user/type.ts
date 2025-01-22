@@ -11,6 +11,8 @@ export type UserDocument = mongoose.Document & {
   verifiedEmail: boolean;
   verifiedPhoneNumber: boolean;
   referralCode?: string;
+  block: boolean;
+  kycStatus: boolean;
 
   lastLoginDevice: {
     userAgent: String;

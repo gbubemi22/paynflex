@@ -51,6 +51,8 @@ export declare const getProfile: (userId: string) => Promise<{
         verifiedEmail: boolean;
         verifiedPhoneNumber: boolean;
         referralCode?: string;
+        block: boolean;
+        kycStatus: boolean;
         lastLoginDevice: {
             userAgent: String;
             appVersion: String;
@@ -81,6 +83,8 @@ export declare const updateUserProfile: (userId: string, firstName?: string, las
         verifiedEmail: boolean;
         verifiedPhoneNumber: boolean;
         referralCode?: string;
+        block: boolean;
+        kycStatus: boolean;
         lastLoginDevice: {
             userAgent: String;
             appVersion: String;

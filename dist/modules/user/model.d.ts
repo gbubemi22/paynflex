@@ -11,6 +11,8 @@ declare const User: mongoose.Model<UserDocument, {}, {}, {}, mongoose.Document<u
     verifiedEmail: boolean;
     verifiedPhoneNumber: boolean;
     referralCode?: string;
+    block: boolean;
+    kycStatus: boolean;
     lastLoginDevice: {
         userAgent: String;
         appVersion: String;

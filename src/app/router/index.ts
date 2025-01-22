@@ -5,6 +5,7 @@ import vtuRoute from "../modules/vtu/index.js";
 import pinRoute from "../modules/pin/index.js";
 import trxRoute from "../modules/transaction/index.js";
 import kycRoute from "../modules/kyc/index.js";
+import adminRoute from "../modules/admin/index.js"
 
 const USER = `/v1/auth`;
 const WALLET = `/v1/wallets`;
@@ -12,6 +13,7 @@ const VTU = `/v1/vtu`;
 const PIN = `/v1/pin`;
 const TRX = `/v1/transactions`;
 const KYC = `/v1/kyc`;
+const Admin = `/v1/auth`;
 
 const route = Router();
 
@@ -21,5 +23,6 @@ route.use(VTU, vtuRoute);
 route.use(PIN, pinRoute);
 route.use(TRX, trxRoute);
 route.use(KYC, kycRoute);
+route.use(Admin, adminRoute);
 
 export default route;

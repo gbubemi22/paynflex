@@ -69,6 +69,8 @@ export const purchaseAirtime = async (
     );
   }
 
+  const reference = await generateTransactionRef();
+
   const url = "https://vtu.ng/wp-json/api/v1/airtime";
   const response = await axios.get(url, { params });
 
@@ -76,11 +78,18 @@ export const purchaseAirtime = async (
   console.log("CODE", response.data.code);
 
   if (response.data.code === "failure") {
+    await Transaction.create({
+      userId: wallet.userId,
+      type: "AIRTIME_PURCHASE",
+      amount: airtimeAmount,
+      trx_id: reference,
+      status: "FAILED",
+    });
     throw new BadRequestError(
       `DUPLICATE ORDER. Please wait for 3 minutes before placing another airtime order of the same amount to the same phone number.`
     );
   }
-  const reference = await generateTransactionRef();
+
   // Handle both success and processing states
   if (response.data.code === "processing" || response.data.code === "success") {
     // Deduct from wallet
@@ -94,6 +103,7 @@ export const purchaseAirtime = async (
       type: "AIRTIME_PURCHASE",
       amount: airtimeAmount,
       trx_id: reference,
+      status: "SUCCESSFUL",
     });
     return {
       message: "Airtime purchase successful",
@@ -144,6 +154,13 @@ export const purchaseData = async (
   const response = await axios.get(url, { params });
 
   if (response.data.code === "failure") {
+    await Transaction.create({
+      userId: wallet.userId,
+      type: "DATA_PURCHASE",
+      amount: airtimeAmount,
+      trx_id: reference,
+      status: "FAILED",
+    });
     throw new BadRequestError(
       `DUPLICATE ORDER. Please wait for 3 minutes before placing another Data order of the same amount to the same phone number.`
     );
@@ -161,6 +178,7 @@ export const purchaseData = async (
       type: "DATA_PURCHASE",
       amount: airtimeAmount,
       trx_id: reference,
+      status: "SUCCESSFUL",
     });
 
     return {
@@ -245,6 +263,13 @@ export const purchaseCableSub = async (
   const url = "https://vtu.ng/wp-json/api/v1/tv";
   const response = await axios.get(url, { params });
   if (response.data.code === "failure") {
+    await Transaction.create({
+      userId: wallet.userId,
+      type: "CABLE_PURCHASE",
+      amount: airtimeAmount,
+      trx_id: reference,
+      status: "FAILED",
+    });
     throw new BadRequestError(`Invalid Meter Number`);
   }
   // Handle both success and processing states
@@ -260,6 +285,7 @@ export const purchaseCableSub = async (
       type: "CABLE_PURCHASE",
       amount: airtimeAmount,
       trx_id: reference,
+      status: "SUCCESSFUL",
     });
     return {
       message: "Electricity bill successfully paid",
@@ -312,6 +338,13 @@ export const purchaseElectricity = async (
   const response = await axios.get(url, { params });
 
   if (response.data.code === "failure") {
+    await Transaction.create({
+      userId: wallet.userId,
+      type: "ELECTRICITY_PURCHASE",
+      amount: airtimeAmount,
+      trx_id: reference,
+      status: "FAILED",
+    });
     throw new BadRequestError(`Invalid Meter Number`);
   }
   // Handle both success and processing states
@@ -327,6 +360,7 @@ export const purchaseElectricity = async (
       type: "ELECTRICITY_PURCHASE",
       amount: airtimeAmount,
       trx_id: reference,
+      status: "SUCCESSFUL",
     });
     return {
       message: "Electricity bill successfully paid",

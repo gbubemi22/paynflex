@@ -22,6 +22,10 @@ const TransactionSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    status: {
+        type: String,
+        default: "PENDING",
+    },
 }, {
     timestamps: true,
     collection: "Transaction",

@@ -50,14 +50,21 @@ export const purchaseAirtime = async (userId, phone, networkId, amount) => {
     if (wallet.balance < airtimeAmount) {
         throw new BadRequestError("Insufficient wallet balance. Please top up your wallet.");
     }
+    const reference = await generateTransactionRef();
     const url = "https://vtu.ng/wp-json/api/v1/airtime";
     const response = await axios.get(url, { params });
     console.log("CODE", response.data.message);
     console.log("CODE", response.data.code);
     if (response.data.code === "failure") {
+        await Transaction.create({
+            userId: wallet.userId,
+            type: "AIRTIME_PURCHASE",
+            amount: airtimeAmount,
+            trx_id: reference,
+            status: "FAILED",
+        });
         throw new BadRequestError(`DUPLICATE ORDER. Please wait for 3 minutes before placing another airtime order of the same amount to the same phone number.`);
     }
-    const reference = await generateTransactionRef();
     // Handle both success and processing states
     if (response.data.code === "processing" || response.data.code === "success") {
         // Deduct from wallet
@@ -67,6 +74,7 @@ export const purchaseAirtime = async (userId, phone, networkId, amount) => {
             type: "AIRTIME_PURCHASE",
             amount: airtimeAmount,
             trx_id: reference,
+            status: "SUCCESSFUL",
         });
         return {
             message: "Airtime purchase successful",
@@ -101,6 +109,13 @@ export const purchaseData = async (userId, phone, networkId, amount, variation_i
     const url = "https://vtu.ng/wp-json/api/v1/data";
     const response = await axios.get(url, { params });
     if (response.data.code === "failure") {
+        await Transaction.create({
+            userId: wallet.userId,
+            type: "DATA_PURCHASE",
+            amount: airtimeAmount,
+            trx_id: reference,
+            status: "FAILED",
+        });
         throw new BadRequestError(`DUPLICATE ORDER. Please wait for 3 minutes before placing another Data order of the same amount to the same phone number.`);
     }
     // Handle both success and processing states
@@ -112,6 +127,7 @@ export const purchaseData = async (userId, phone, networkId, amount, variation_i
             type: "DATA_PURCHASE",
             amount: airtimeAmount,
             trx_id: reference,
+            status: "SUCCESSFUL",
         });
         return {
             message: "Airtime purchase successful",
@@ -173,6 +189,13 @@ export const purchaseCableSub = async (userId, phone, amount, service_id, custom
     const url = "https://vtu.ng/wp-json/api/v1/tv";
     const response = await axios.get(url, { params });
     if (response.data.code === "failure") {
+        await Transaction.create({
+            userId: wallet.userId,
+            type: "CABLE_PURCHASE",
+            amount: airtimeAmount,
+            trx_id: reference,
+            status: "FAILED",
+        });
         throw new BadRequestError(`Invalid Meter Number`);
     }
     // Handle both success and processing states
@@ -184,6 +207,7 @@ export const purchaseCableSub = async (userId, phone, amount, service_id, custom
             type: "CABLE_PURCHASE",
             amount: airtimeAmount,
             trx_id: reference,
+            status: "SUCCESSFUL",
         });
         return {
             message: "Electricity bill successfully paid",
@@ -219,6 +243,13 @@ export const purchaseElectricity = async (userId, phone, meter_number, service_i
     const url = "https://vtu.ng/wp-json/api/v1/electricity";
     const response = await axios.get(url, { params });
     if (response.data.code === "failure") {
+        await Transaction.create({
+            userId: wallet.userId,
+            type: "ELECTRICITY_PURCHASE",
+            amount: airtimeAmount,
+            trx_id: reference,
+            status: "FAILED",
+        });
         throw new BadRequestError(`Invalid Meter Number`);
     }
     // Handle both success and processing states
@@ -230,6 +261,7 @@ export const purchaseElectricity = async (userId, phone, meter_number, service_i
             type: "ELECTRICITY_PURCHASE",
             amount: airtimeAmount,
             trx_id: reference,
+            status: "SUCCESSFUL",
         });
         return {
             message: "Electricity bill successfully paid",
