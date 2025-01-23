@@ -7,6 +7,7 @@ export declare const trx: () => Promise<{
     totalAmount: any;
     pendingAmount: any;
     failedAmount: any;
+    successfulAmount: any;
 }>;
 export declare const getTransactionTotals: () => Promise<{
     dailyAmount: any;

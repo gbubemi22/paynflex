@@ -43,16 +43,29 @@ export const trx = async () => {
             },
         },
     ]);
+    const totalSuccessfulAmount = await Transaction.aggregate([
+        {
+            $match: { status: "SUCCESSFUL" },
+        },
+        {
+            $group: {
+                _id: null,
+                totalPendingAmount: { $sum: "$amount" },
+            },
+        },
+    ]);
     // Extracting the total amounts
     const totalAmount = totalTrxAmount.length > 0 ? totalTrxAmount[0].totalAmount : 0;
     const pendingAmount = totalPendingAmount.length > 0
         ? totalPendingAmount[0].totalPendingAmount
         : 0;
     const failedAmount = totalFailedAmount.length > 0 ? totalFailedAmount[0].totalFailedAmount : 0;
+    const successfulAmount = totalFailedAmount.length > 0 ? totalFailedAmount[0].totalFailedAmount : 0;
     return {
         totalAmount,
         pendingAmount,
         failedAmount,
+        successfulAmount
     };
 };
 export const getTransactionTotals = async () => {

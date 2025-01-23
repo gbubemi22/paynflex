@@ -32,7 +32,7 @@ export const uploadToS3 = async (file: any) => {
   console.log(key);
 
   const params = {
-    Bucket: 'gbubemi',
+    Bucket: 'paynflex',
     Key: key,
     Body: file.data,
     ContentType: file.mimetype,

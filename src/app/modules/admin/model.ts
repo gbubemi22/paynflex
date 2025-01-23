@@ -7,7 +7,12 @@ export type AdminDocument = mongoose.Document & {
   lastName: string;
   email: string;
   password: string;
-  role: "Super-admin" | "admin";
+  roleId: mongoose.Types.ObjectId;
+  verifiedEmail: boolean;
+  verifiedNumber: boolean;
+  block: boolean;
+  otp?: string;
+  expired_at?: string;
 
   comparePassword(candidatePassword: string): Promise<boolean>;
   generateJWT(): Promise<string>;
@@ -47,10 +52,19 @@ const AdminSchema = new mongoose.Schema<AdminDocument>(
       required: true,
     },
 
-    role: {
+    roleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Roles",
+      required: true,
+    },
+
+    otp: {
       type: String,
-      enum: Object.values(UserRole),
-      default: UserRole.SUPER_ADMIN,
+      required: false,
+    },
+    expired_at: {
+      type: Date,
+      required: false,
     },
   },
   {

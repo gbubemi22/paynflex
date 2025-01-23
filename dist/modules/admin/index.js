@@ -1,6 +1,15 @@
 import express from "express";
-import { Create, Login } from "./controller.js";
+import { changePassword, Create, forgetPassword, GetAdminByID, GetAllAdminService, GetTransactionTotals, Login, resetPassword, Trx, User, } from "./controller.js";
+import { verifyToken } from "../../middleware/auth.js";
 const router = express.Router();
+router.route("/user-stat").get(User);
+router.route("/trx-stat").get(Trx);
+router.route("/trx").get(GetTransactionTotals);
 router.route("/create").post(Create);
 router.route("/login").post(Login);
+router.route("/forget-password").post(forgetPassword);
+router.route("/rest-password").post(resetPassword);
+router.route("/change-password").patch(verifyToken, changePassword);
+router.route("/list").get(GetAllAdminService);
+router.route("/:id").get(GetAdminByID);
 export default router;

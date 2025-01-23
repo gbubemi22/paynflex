@@ -1,5 +1,6 @@
 import { Controller } from "../../utils/constant.js";
 export declare const Create: Controller;
+export declare const VerifyEmail: Controller;
 export declare const SendVerificationOtpToPhone: Controller;
 export declare const VerifyOtpVerification: Controller;
 export declare const Login: Controller;

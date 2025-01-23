@@ -9,6 +9,11 @@ export declare const create: (payload: UserDataType) => Promise<{
         referralCode: string | undefined;
     };
 }>;
+export declare const verifyEmail: (email: string, otp: string) => Promise<{
+    status: boolean;
+    message: string;
+    data: never[];
+}>;
 export declare const sendVerificationOtpToPhone: (phoneNumber: string) => Promise<{
     success: boolean;
     message: string;

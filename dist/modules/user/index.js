@@ -1,13 +1,14 @@
 import express from "express";
 import { joiValidator } from "../../utils/validator.js";
 import validation from "../../utils/validator.js";
-import { Create, SendVerificationOtpToPhone, VerifyOtpVerification, Login, RequestPasswordReset, VerifyOtpForPasswordReset, UpdateUserProfile, GetProfile, } from "./controller.js";
+import { Create, SendVerificationOtpToPhone, VerifyOtpVerification, Login, RequestPasswordReset, VerifyOtpForPasswordReset, UpdateUserProfile, GetProfile, VerifyEmail, } from "./controller.js";
 import { verifyToken } from "../../middleware/auth.js";
 const router = express.Router();
 router.route("/register").post(joiValidator(validation.create), Create);
 router
     .route("/send-otp-phone")
     .post(joiValidator(validation.sendVerificationOtpToPhone), SendVerificationOtpToPhone);
+router.route("/verify-email").post(VerifyEmail);
 router
     .route("/verify-phone")
     .post(joiValidator(validation.VerifyOtpVerification), VerifyOtpVerification);

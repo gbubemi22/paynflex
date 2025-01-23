@@ -7,6 +7,7 @@ import {
   requestPasswordReset,
   sendVerificationOtpToPhone,
   updateUserProfile,
+  verifyEmail,
   verifyOtpForPasswordReset,
   verifyOtpVerification,
 } from "./service.js";
@@ -14,6 +15,15 @@ import {
 export const Create: Controller = async (req, res, next) => {
   try {
     res.status(StatusCodes.CREATED).json(await create(req.body));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const VerifyEmail: Controller = async (req, res, next) => {
+  try {
+    const { email, otp } = req.body;
+    res.status(StatusCodes.CREATED).json(await verifyEmail(email, otp));
   } catch (error) {
     next(error);
   }

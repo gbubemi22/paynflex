@@ -1,8 +1,17 @@
 import { StatusCodes } from "http-status-codes";
-import { create, getProfile, login, requestPasswordReset, sendVerificationOtpToPhone, updateUserProfile, verifyOtpForPasswordReset, verifyOtpVerification, } from "./service.js";
+import { create, getProfile, login, requestPasswordReset, sendVerificationOtpToPhone, updateUserProfile, verifyEmail, verifyOtpForPasswordReset, verifyOtpVerification, } from "./service.js";
 export const Create = async (req, res, next) => {
     try {
         res.status(StatusCodes.CREATED).json(await create(req.body));
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const VerifyEmail = async (req, res, next) => {
+    try {
+        const { email, otp } = req.body;
+        res.status(StatusCodes.CREATED).json(await verifyEmail(email, otp));
     }
     catch (error) {
         next(error);

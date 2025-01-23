@@ -1,3 +1,11 @@
 import { Controller } from "../../utils/constant.js";
 export declare const Create: Controller;
 export declare const Login: Controller;
+export declare const forgetPassword: Controller;
+export declare const resetPassword: Controller;
+export declare const changePassword: Controller;
+export declare const GetAllAdminService: Controller;
+export declare const GetAdminByID: Controller;
+export declare const User: Controller;
+export declare const Trx: Controller;
+export declare const GetTransactionTotals: Controller;

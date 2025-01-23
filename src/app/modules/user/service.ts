@@ -23,8 +23,6 @@ export const create = async (payload: UserDataType) => {
   });
 
   if (checkUser) {
-    // Determine which field is duplicated and throw a ConflictError
-
     if (checkUser.phoneNumber === payload.phoneNumber) {
       throw new ConflictError(`Phone number already in use`);
     }
@@ -41,12 +39,19 @@ export const create = async (payload: UserDataType) => {
     }
   }
 
+  const otp = generateOTP();
+  const expired_at = getOtpExpiryTime();
+
   const user = await User.create({
     ...payload,
     referralCode: generateReferralCode(),
+    otp,
+    expired_at,
   });
 
   await Wallet.create({ userId: user.id });
+  const message = `Your OTP is ${otp} and it expires in 10 minutes.`;
+  await sendEmail(user.email, "Verify Email", message);
 
   return {
     success: true,
@@ -57,6 +62,26 @@ export const create = async (payload: UserDataType) => {
       phoneNumber: user.phoneNumber,
       referralCode: user.referralCode,
     },
+  };
+};
+
+export const verifyEmail = async (email: string, otp: string) => {
+  const user = await User.findOne({ email: email });
+
+  if (!user) throw new NotFoundError(`User not found`);
+
+  if (user.otp !== otp) throw new BadRequestError(`Incorrect Otp`);
+
+  await User.findByIdAndUpdate(
+    { _id: user._id },
+    { $set: { verifiedEmail: true, otp: null, expired_at: null } },
+    { new: true }
+  );
+
+  return {
+    status: true,
+    message: `Email Verified Successfuly`,
+    data: [],
   };
 };
 

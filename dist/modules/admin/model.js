@@ -23,10 +23,18 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    role: {
+    roleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Roles",
+        required: true,
+    },
+    otp: {
         type: String,
-        enum: Object.values(UserRole),
-        default: UserRole.SUPER_ADMIN,
+        required: false,
+    },
+    expired_at: {
+        type: Date,
+        required: false,
     },
 }, {
     timestamps: true,

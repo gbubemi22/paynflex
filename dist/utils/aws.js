@@ -21,7 +21,7 @@ export const uploadToS3 = async (file) => {
     const key = `${uuidv4()}_${file.mimetype.replace('/', '-')}`;
     console.log(key);
     const params = {
-        Bucket: 'gbubemi',
+        Bucket: 'paynflex',
         Key: key,
         Body: file.data,
         ContentType: file.mimetype,

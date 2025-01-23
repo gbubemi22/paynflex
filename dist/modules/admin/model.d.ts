@@ -4,7 +4,12 @@ export type AdminDocument = mongoose.Document & {
     lastName: string;
     email: string;
     password: string;
-    role: "Super-admin" | "admin";
+    roleId: mongoose.Types.ObjectId;
+    verifiedEmail: boolean;
+    verifiedNumber: boolean;
+    block: boolean;
+    otp?: string;
+    expired_at?: string;
     comparePassword(candidatePassword: string): Promise<boolean>;
     generateJWT(): Promise<string>;
 };
@@ -19,7 +24,12 @@ declare const Admin: mongoose.Model<AdminDocument, {}, {}, {}, mongoose.Document
     lastName: string;
     email: string;
     password: string;
-    role: "Super-admin" | "admin";
+    roleId: mongoose.Types.ObjectId;
+    verifiedEmail: boolean;
+    verifiedNumber: boolean;
+    block: boolean;
+    otp?: string;
+    expired_at?: string;
     comparePassword(candidatePassword: string): Promise<boolean>;
     generateJWT(): Promise<string>;
 } & Required<{

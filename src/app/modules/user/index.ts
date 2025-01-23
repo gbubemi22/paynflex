@@ -10,6 +10,7 @@ import {
   VerifyOtpForPasswordReset,
   UpdateUserProfile,
   GetProfile,
+  VerifyEmail,
 } from "./controller.js";
 import { verifyToken } from "../../middleware/auth.js";
 
@@ -23,6 +24,8 @@ router
     joiValidator(validation.sendVerificationOtpToPhone),
     SendVerificationOtpToPhone
   );
+
+  router.route("/verify-email").post(VerifyEmail)
 
 router
   .route("/verify-phone")
