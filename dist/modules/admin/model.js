@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-var UserRole;
-(function (UserRole) {
-    UserRole["SUPER_ADMIN"] = "Super-admin";
-    UserRole["ADMIN"] = "admin";
-})(UserRole || (UserRole = {}));
 const AdminSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -60,7 +55,7 @@ AdminSchema.methods.comparePassword = async function (candidatePassword) {
 AdminSchema.methods.generateJWT = function () {
     const token = jwt.sign({
         id: this._id,
-        email: this.email,
+        role: this.roleId.name,
     }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_TOKEN_VALIDITY });
     return token;
 };

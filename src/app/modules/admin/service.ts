@@ -66,7 +66,7 @@ export const getAdminByID = async (adminId: string) => {
     _id: adminId,
   }).select({
     password: 0,
-  });
+  }).populate("roleId");
   if (!result)
     throw new NotFoundError(`Profile with ID: ${adminId} not on this platform`);
   const data = result;

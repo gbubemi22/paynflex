@@ -46,7 +46,7 @@ export const updateRoleService = async (roleId: string, name: string) => {
   const result = await Role.findOneAndUpdate(
     { _id: roleId },
     { $set: { name: name } },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   );
 
   if (!result) throw new NotFoundError(`Role not found`);
@@ -58,7 +58,7 @@ export const updateRoleService = async (roleId: string, name: string) => {
 };
 
 export const deleteRoleService = async (roleId: string) => {
-  const result = await Role.findOneAndDelete({ _id: roleId });
+  await Role.findOneAndDelete({ _id: roleId });
 
   return {
     status: true,

@@ -1,9 +1,15 @@
 import express from "express";
 import { listAll, listOne, updateRole, deleteRole, Create, } from "./controller.js";
+import { authorizePermissions, } from "../../middleware/checkRoles.js";
+import { AdminVerifyToken } from "../../middleware/admin.auth.js";
 const router = express.Router();
-router.route("/").post(Create);
-router.route("/").get(listAll);
-router.route("/:roleId").get(listOne);
-router.route("/:roleId").patch(updateRole);
-router.route("/:roleId").delete(deleteRole);
+router.post("/", AdminVerifyToken, authorizePermissions("Super-Admin"), Create);
+router.route("/").get(AdminVerifyToken, listAll);
+router.route("/:roleId").get(AdminVerifyToken, listOne);
+router
+    .route("/:roleId")
+    .patch(AdminVerifyToken, authorizePermissions("Super-Admin"), updateRole);
+router
+    .route("/:roleId")
+    .delete(AdminVerifyToken, authorizePermissions("Super-Admin"), deleteRole);
 export default router;

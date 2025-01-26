@@ -3,7 +3,7 @@ export type BusinessDocument = mongoose.Document & {
     name: string;
     description: string;
     address: string;
-    category: string;
+    category: mongoose.Types.ObjectId;
     images: string;
     deleteAt?: Date;
 };
@@ -19,7 +19,7 @@ declare const Business: mongoose.Model<BusinessDocument, {}, {}, {}, mongoose.Do
     name: string;
     description: string;
     address: string;
-    category: string;
+    category: mongoose.Types.ObjectId;
     images: string;
     deleteAt?: Date;
 } & Required<{

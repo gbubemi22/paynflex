@@ -12,6 +12,8 @@ import {
   User,
 } from "./controller.js";
 import { verifyToken } from "../../middleware/auth.js";
+import { AdminVerifyToken } from "../../middleware/admin.auth.js";
+import { authorizePermissions } from "../../middleware/checkRoles.js";
 
 const router = express.Router();
 
@@ -23,7 +25,7 @@ router.route("/trx-stat").get(Trx);
 
 router.route("/trx").get(GetTransactionTotals);
 
-router.route("/create").post(Create);
+router.route("/create").post(AdminVerifyToken, authorizePermissions("Super-Admin"),Create);
 router.route("/login").post(Login);
 router.route("/forget-password").post(forgetPassword);
 
@@ -37,3 +39,5 @@ router.route("/:id").get(GetAdminByID);
 
 
 export default router;
+
+

@@ -4,7 +4,7 @@ export type BusinessDocument = mongoose.Document & {
   name: string;
   description: string;
   address: string;
-  category: string;
+  category: mongoose.Types.ObjectId;
   images: string;
   deleteAt?: Date;
 };
@@ -36,7 +36,8 @@ const BusinessSchema = new mongoose.Schema<BusinessDocument>(
     },
 
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
 

@@ -43,7 +43,7 @@ export const updateRoleService = async (roleId, name) => {
     };
 };
 export const deleteRoleService = async (roleId) => {
-    const result = await Role.findOneAndDelete({ _id: roleId });
+    await Role.findOneAndDelete({ _id: roleId });
     return {
         status: true,
         message: `Deleted Successfully`,

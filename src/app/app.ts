@@ -54,7 +54,7 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'Welcome to PanNFlex Service api...',
+    message: 'Welcome to PanNFlex Service api...@@',
     httpStatusCode: StatusCodes.OK,
     service: process.env.SERVICE_NAME as string,
   });

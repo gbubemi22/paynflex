@@ -18,11 +18,6 @@ export type AdminDocument = mongoose.Document & {
   generateJWT(): Promise<string>;
 };
 
-enum UserRole {
-  SUPER_ADMIN = "Super-admin",
-  ADMIN = "admin",
-}
-
 export type AdminDatatype = {
   firstName: string;
   lastName: string;
@@ -99,7 +94,7 @@ AdminSchema.methods.generateJWT = function () {
   const token = jwt.sign(
     {
       id: this._id,
-      email: this.email,
+      role: this.roleId.name,
     },
     process.env.ACCESS_TOKEN_SECRET as string,
     { expiresIn: process.env.JWT_TOKEN_VALIDITY }

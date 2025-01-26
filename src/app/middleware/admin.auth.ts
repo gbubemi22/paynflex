@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { Controller } from "../utils/constant.js";
 import { UnauthorizedError } from "../utils/error.js";
 
-export const verifyToken: Controller = async (req, res, next) => {
+export const AdminVerifyToken: Controller = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (authHeader && authHeader.startsWith("Bearer ")) {
@@ -26,7 +26,7 @@ export const verifyToken: Controller = async (req, res, next) => {
           });
         } else {
           // Set the decoded token payload on the request object
-          req.user = { id: decoded.id, token };
+          req.user = { id: decoded.id, role: decoded.role, token };
 
           // Call the next middleware or route handler
           next();
