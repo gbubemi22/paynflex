@@ -7,6 +7,7 @@ export type AdminDocument = mongoose.Document & {
   lastName: string;
   email: string;
   password: string;
+  phoneNumber: string;
   roleId: mongoose.Types.ObjectId;
   verifiedEmail: boolean;
   verifiedNumber: boolean;
@@ -23,6 +24,7 @@ export type AdminDatatype = {
   lastName: string;
   email: string;
   password: string;
+  phoneNumber: string;
 };
 
 const AdminSchema = new mongoose.Schema<AdminDocument>(
@@ -38,6 +40,10 @@ const AdminSchema = new mongoose.Schema<AdminDocument>(
     },
 
     email: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
       type: String,
       required: true,
     },

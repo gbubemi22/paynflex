@@ -8,6 +8,7 @@ export declare const create: (payload: AdminDatatype) => Promise<{
         email: string;
         firstName: string;
         lastName: string;
+        phoneNumber: string;
     };
 }>;
 export declare const login: (email: string, password: string) => Promise<{
@@ -29,6 +30,7 @@ export declare const getAdminByID: (adminId: string) => Promise<{
         lastName: string;
         email: string;
         password: string;
+        phoneNumber: string;
         roleId: import("mongoose").Types.ObjectId;
         verifiedEmail: boolean;
         verifiedNumber: boolean;
@@ -52,6 +54,7 @@ export declare const getAllAdminService: () => Promise<{
         lastName: string;
         email: string;
         password: string;
+        phoneNumber: string;
         roleId: import("mongoose").Types.ObjectId;
         verifiedEmail: boolean;
         verifiedNumber: boolean;
@@ -76,4 +79,27 @@ export declare const changePasswordService: (adminId: string, currentPassword: s
     status: boolean;
     message: string;
     data: never[];
+}>;
+export declare const editRole: (adminId: string, roleId: string) => Promise<{
+    status: boolean;
+    message: string;
+    data: (import("mongoose").Document<unknown, {}, import("./model.js").AdminDocument> & import("mongoose").Document<unknown, any, any> & {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        phoneNumber: string;
+        roleId: import("mongoose").Types.ObjectId;
+        verifiedEmail: boolean;
+        verifiedNumber: boolean;
+        block: boolean;
+        otp?: string;
+        expired_at?: string;
+        comparePassword(candidatePassword: string): Promise<boolean>;
+        generateJWT(): Promise<string>;
+    } & Required<{
+        _id: unknown;
+    }> & {
+        __v: number;
+    }) | null;
 }>;

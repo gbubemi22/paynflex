@@ -17,6 +17,13 @@ export const create = async (payload: AdminDatatype) => {
     throw new ConflictError(`Email already in use`);
   }
 
+  const checkUserPhone = await Admin.findOne({
+    phoneNumber: payload.phoneNumber,
+  });
+
+  if (checkUserPhone?.phoneNumber === payload.phoneNumber) {
+    throw new ConflictError(`Phone number already in use`);
+  }
   const user = await Admin.create({
     ...payload,
   });
@@ -29,12 +36,15 @@ export const create = async (payload: AdminDatatype) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
     },
   };
 };
 
 export const login = async (email: string, password: string) => {
-  const user = await Admin.findOne({ email: email }).populate<{ roleId: { name: string } }>("roleId");
+  const user = await Admin.findOne({ email: email }).populate<{
+    roleId: { name: string };
+  }>("roleId");
 
   console.log(user);
   const typ = user?.roleId.name;
@@ -55,7 +65,6 @@ export const login = async (email: string, password: string) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      
     },
     token,
   };
@@ -64,9 +73,11 @@ export const login = async (email: string, password: string) => {
 export const getAdminByID = async (adminId: string) => {
   const result = await Admin.findById({
     _id: adminId,
-  }).select({
-    password: 0,
-  }).populate("roleId");
+  })
+    .select({
+      password: 0,
+    })
+    .populate("roleId");
   if (!result)
     throw new NotFoundError(`Profile with ID: ${adminId} not on this platform`);
   const data = result;
@@ -79,9 +90,11 @@ export const getAdminByID = async (adminId: string) => {
 };
 
 export const getAllAdminService = async () => {
-  const results = await Admin.find({}).select({
-    password: 0,
-  }).populate("roleId");
+  const results = await Admin.find({})
+    .select({
+      password: 0,
+    })
+    .populate("roleId");
 
   if (!results || results.length === 0)
     throw new NotFoundError(`Agents Profile not found`);
@@ -201,5 +214,23 @@ export const changePasswordService = async (
     status: true,
     message: `Password as been change successfully`,
     data: [],
+  };
+};
+
+export const editRole = async (adminId: string, roleId: string) => {
+  const admin = await Admin.findById(adminId);
+
+  if (!admin) throw new NotFoundError(`Admin not found`);
+
+  const result = await Admin.findByIdAndUpdate(
+    { _id: adminId },
+    { $set: { roleId: roleId } },
+    { new: true, runValidators: true }
+  );
+
+  return {
+    status: true,
+    message: `Admin role Updated`,
+    data: result,
   };
 };

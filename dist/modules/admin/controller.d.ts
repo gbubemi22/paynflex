@@ -9,3 +9,4 @@ export declare const GetAdminByID: Controller;
 export declare const User: Controller;
 export declare const Trx: Controller;
 export declare const GetTransactionTotals: Controller;
+export declare const EditRole: Controller;

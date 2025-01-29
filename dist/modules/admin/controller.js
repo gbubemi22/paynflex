@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { changePasswordService, create, forgetPasswordService, getAdminByID, getAllAdminService, login, resetPasswordService, } from "./service.js";
+import { changePasswordService, create, editRole, forgetPasswordService, getAdminByID, getAllAdminService, login, resetPasswordService, } from "./service.js";
 import { user, getTransactionTotals, trx } from "./dashboard.js";
 export const Create = async (req, res, next) => {
     try {
@@ -86,6 +86,16 @@ export const Trx = async (req, res, next) => {
 export const GetTransactionTotals = async (req, res, next) => {
     try {
         res.status(StatusCodes.OK).json(await getTransactionTotals());
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const EditRole = async (req, res, next) => {
+    try {
+        const { roleId } = req.body;
+        const { adminId } = req.params;
+        res.status(StatusCodes.OK).json(await editRole(adminId, roleId));
     }
     catch (error) {
         next(error);

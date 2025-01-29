@@ -4,6 +4,7 @@ export type AdminDocument = mongoose.Document & {
     lastName: string;
     email: string;
     password: string;
+    phoneNumber: string;
     roleId: mongoose.Types.ObjectId;
     verifiedEmail: boolean;
     verifiedNumber: boolean;
@@ -18,12 +19,14 @@ export type AdminDatatype = {
     lastName: string;
     email: string;
     password: string;
+    phoneNumber: string;
 };
 declare const Admin: mongoose.Model<AdminDocument, {}, {}, {}, mongoose.Document<unknown, {}, AdminDocument> & mongoose.Document<unknown, any, any> & {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
+    phoneNumber: string;
     roleId: mongoose.Types.ObjectId;
     verifiedEmail: boolean;
     verifiedNumber: boolean;

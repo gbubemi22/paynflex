@@ -8,6 +8,12 @@ export const create = async (payload) => {
     if (checkUser?.email === payload.email) {
         throw new ConflictError(`Email already in use`);
     }
+    const checkUserPhone = await Admin.findOne({
+        phoneNumber: payload.phoneNumber,
+    });
+    if (checkUserPhone?.phoneNumber === payload.phoneNumber) {
+        throw new ConflictError(`Phone number already in use`);
+    }
     const user = await Admin.create({
         ...payload,
     });
@@ -19,6 +25,7 @@ export const create = async (payload) => {
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
+            phoneNumber: user.phoneNumber,
         },
     };
 };
@@ -47,9 +54,11 @@ export const login = async (email, password) => {
 export const getAdminByID = async (adminId) => {
     const result = await Admin.findById({
         _id: adminId,
-    }).select({
+    })
+        .select({
         password: 0,
-    }).populate("roleId");
+    })
+        .populate("roleId");
     if (!result)
         throw new NotFoundError(`Profile with ID: ${adminId} not on this platform`);
     const data = result;
@@ -60,9 +69,11 @@ export const getAdminByID = async (adminId) => {
     };
 };
 export const getAllAdminService = async () => {
-    const results = await Admin.find({}).select({
+    const results = await Admin.find({})
+        .select({
         password: 0,
-    }).populate("roleId");
+    })
+        .populate("roleId");
     if (!results || results.length === 0)
         throw new NotFoundError(`Agents Profile not found`);
     return {
@@ -144,5 +155,16 @@ export const changePasswordService = async (adminId, currentPassword, newPasswor
         status: true,
         message: `Password as been change successfully`,
         data: [],
+    };
+};
+export const editRole = async (adminId, roleId) => {
+    const admin = await Admin.findById(adminId);
+    if (!admin)
+        throw new NotFoundError(`Admin not found`);
+    const result = await Admin.findByIdAndUpdate({ _id: adminId }, { $set: { roleId: roleId } }, { new: true, runValidators: true });
+    return {
+        status: true,
+        message: `Admin role Updated`,
+        data: result,
     };
 };

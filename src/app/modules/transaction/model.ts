@@ -15,7 +15,7 @@ const TransactionSchema = new mongoose.Schema<TransactionDocument>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
+     
     },
     type: {
       type: String,

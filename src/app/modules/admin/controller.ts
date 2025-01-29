@@ -3,6 +3,7 @@ import { Controller } from "../../utils/constant.js";
 import {
   changePasswordService,
   create,
+  editRole,
   forgetPasswordService,
   getAdminByID,
   getAllAdminService,
@@ -97,6 +98,16 @@ export const Trx: Controller = async (req, res, next) => {
 export const GetTransactionTotals: Controller = async (req, res, next) => {
   try {
     res.status(StatusCodes.OK).json(await getTransactionTotals());
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EditRole: Controller = async (req, res, next) => {
+  try {
+    const { roleId } = req.body;
+    const { adminId } = req.params;
+    res.status(StatusCodes.OK).json(await editRole(adminId, roleId));
   } catch (error) {
     next(error);
   }
