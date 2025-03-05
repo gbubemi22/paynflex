@@ -114,12 +114,12 @@ export const purchaseAirtime = async (
       status: "SUCCESSFUL",
     });
 
-    console.log("CHECK 1")
+    console.log("CHECK 1");
     const user = await User.findById(new mongoose.Types.ObjectId(userId));
-    console.log("CHECK 2")
-    if(!user) throw new NotFoundError(`user not found`)
+    console.log("CHECK 2");
+    if (!user) throw new NotFoundError(`user not found`);
 
-      console.log("CHECK 3")
+    console.log("CHECK 3");
 
     // ✅ Fetch Admin Setting for Airtime
     const adminSetting = await AdminSetting.findOne({ type: "airtime" });
@@ -136,7 +136,7 @@ export const purchaseAirtime = async (
         );
       }
     }
-    console.log("CHECK 4")
+    console.log("CHECK 4");
     const notification = new Notification({
       userId: new mongoose.Types.ObjectId(userId),
       title: "Airtime Purchase Successful",
@@ -147,7 +147,7 @@ export const purchaseAirtime = async (
         status: "SUCCESSFUL",
       },
     });
-    console.log("CHECK 5")
+    console.log("CHECK 5");
     await notification.save();
 
     // ✅ Send push notification via Firebase
@@ -259,7 +259,7 @@ export const purchaseData = async (
     }
 
     const notification = new Notification({
-      userId:new mongoose.Types.ObjectId(userId),
+      userId: new mongoose.Types.ObjectId(userId),
       title: "Airtime Purchase Successful",
       body: `You have successfully purchased airtime of ${amount} for ${phone}.`,
       data: {
@@ -531,7 +531,7 @@ export const purchaseElectricity = async (
     }
 
     const notification = new Notification({
-      userId:new mongoose.Types.ObjectId(userId),
+      userId: new mongoose.Types.ObjectId(userId),
       title: "CABLE_PURCHASE Successful",
       body: `You have successfully purchased airtime of ${amount} for ${meter_number}.`,
       data: {
@@ -565,3 +565,5 @@ export const purchaseElectricity = async (
     throw new BadRequestError(response.data.message || " purchase failed");
   }
 };
+
+export const Sms = async () => {};
