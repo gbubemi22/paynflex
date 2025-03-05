@@ -1,0 +1,12 @@
+import { Controller } from "../../utils/constant.js";
+export declare const Create: Controller;
+export declare const VerifyEmail: Controller;
+export declare const Login: Controller;
+export declare const RequestPasswordReset: Controller;
+export declare const VerifyOtpForPasswordReset: Controller;
+export declare const GetProfile: Controller;
+export declare const UpdateUserProfile: Controller;
+export declare const Code: Controller;
+export declare const UpdateProfile: Controller;
+export declare const Point: Controller;
+export declare const ConvertPoint: Controller;
