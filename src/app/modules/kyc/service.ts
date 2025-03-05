@@ -49,3 +49,6 @@ export const listOne = async (id: string) => {
     data: results,
   };
 };
+
+
+export const update = async (id: string, documentImage: string[]) => {}
